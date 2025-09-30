@@ -8,9 +8,10 @@ import matplotlib.pyplot as plt
 def run_experiment(dataset_type, train_path, test_path=None, k=3, p=2,
                    plot_type=None, return_metrics=False, return_plot=True, train_ratio=0.8):
     """
-    dataset_type: 'digits' 或 'dating'
-    train_path: train dataset
-    test_path: test dataset
+    Args:
+        dataset_type: 'digits' 或 'dating'
+        train_path: train dataset
+        test_path: test dataset
     """
     print(f"Running {dataset_type} experiment with k={k}, p={p}...")
 
@@ -99,4 +100,37 @@ def param_sweep_experiment(dataset_name, train_path, test_path,
         plt.title(f"KNN: effect of {param_name} on {dataset_name} (k={fixed_k})")
     plt.legend()
     plt.grid(True, linestyle=':', alpha=0.5)
+    plt.show()
+
+
+def train_ratio_experiment(train_path, ratios=[0.5, 0.6, 0.7, 0.8, 0.9],
+                           k=3, p=2, plot_type=None):
+    """
+    Args:
+        train_path: dating dataset
+        ratios: different train ratios
+        plot_type: 'pr' or 'roc'
+    """
+    accuracies, macro_f1s, weighted_f1s = [], [], []
+
+    for r in ratios:
+        metrics = run_experiment("dating", train_path, k=k, p=p,
+                                 plot_type=plot_type,
+                                 return_metrics=True, return_plot=False,
+                                 train_ratio=r)
+        accuracies.append(metrics["accuracy"])
+        macro_f1s.append(metrics["macro avg"]["f1-score"])
+        weighted_f1s.append(metrics["weighted avg"]["f1-score"])
+
+    # 绘制趋势图
+    plt.figure(figsize=(8, 6))
+    plt.plot(ratios, accuracies, marker='o', label="Accuracy")
+    plt.plot(ratios, macro_f1s, marker='s', label="Macro F1")
+    plt.plot(ratios, weighted_f1s, marker='^', label="Weighted F1")
+
+    plt.xlabel("Train Ratio")
+    plt.ylabel("Score")
+    plt.title("Effect of Train/Test Split on Dating Dataset")
+    plt.legend()
+    plt.grid(True)
     plt.show()
