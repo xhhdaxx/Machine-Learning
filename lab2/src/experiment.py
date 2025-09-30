@@ -13,7 +13,10 @@ def run_experiment(dataset_type, train_path, test_path=None, k=3, p=2,
         train_path: train dataset
         test_path: test dataset
     """
-    print(f"Running {dataset_type} experiment with k={k}, p={p}...")
+    if dataset_type == "dating":
+        print(f"Running {dataset_type} experiment with k={k}, p={p},train_ratio={train_ratio}...")
+    else:
+        print(f"Running {dataset_type} experiment with k={k}, p={p}...")
 
     # 1. 加载数据
     if dataset_type == "digits":
@@ -21,7 +24,6 @@ def run_experiment(dataset_type, train_path, test_path=None, k=3, p=2,
         X_test, y_test = load_digit_dataset(test_path)
     elif dataset_type == "dating":
         X_train, y_train = load_dating_dataset(train_path)
-        # 简单划分 80% 训练 + 20% 测试
         split = int(train_ratio * len(X_train))
         X_test, y_test = X_train[split:], y_train[split:]
         X_train, y_train = X_train[:split], y_train[:split]
