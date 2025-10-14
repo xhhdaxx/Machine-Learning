@@ -1,6 +1,6 @@
-from .data_loader import load_digit_dataset, load_dating_dataset
-from .model import build_knn_model
-from .evaluate import evaluate_model, plot_pr_curve, plot_roc_curve
+from data_loader import load_digit_dataset, load_dating_dataset
+from model import build_knn_model
+from evaluate import evaluate_model, plot_pr_curve, plot_roc_curve
 from sklearn.metrics import classification_report
 import matplotlib.pyplot as plt
 

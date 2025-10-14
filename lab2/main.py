@@ -1,4 +1,4 @@
-from src.experiment import run_experiment, param_sweep_experiment, train_ratio_experiment
+from experiment import run_experiment
 
 
 def main():
