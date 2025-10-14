@@ -1,7 +1,6 @@
 from sklearn.metrics import accuracy_score, classification_report
 
 def evaluate_model(model, X_test, y_test, show_report=False):
-    """评估模型准确率，可选输出分类报告"""
     y_pred = model.predict(X_test)
     acc = accuracy_score(y_test, y_pred)
     if show_report:

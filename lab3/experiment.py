@@ -1,4 +1,3 @@
-# experiment.py
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.tree import plot_tree
@@ -8,7 +7,6 @@ from evaluate import evaluate_model
 
 
 def run_experiment(datasets, criteria, depths):
-    """在多个数据集上运行不同参数组合的决策树实验"""
     results = []
 
     for name in datasets:
@@ -33,7 +31,13 @@ def visualize_tree(dataset_name="iris", criterion="entropy", max_depth=4):
     model = build_decision_tree(criterion=criterion, max_depth=max_depth)
     model.fit(X_train, y_train)
 
-    plt.figure(figsize=(16, 8))
+    if max_depth == 2:
+        plt.figure(figsize=(8, 6))
+    elif max_depth == 4:
+        plt.figure(figsize=(12, 8))
+    else:
+        plt.figure(figsize=(20, 9))
+
     plot_tree(
         model,
         filled=True,
@@ -55,7 +59,6 @@ def visualize_decision_boundary(dataset_name="iris", feature_idx=[0, 2], criteri
     clf = build_decision_tree(criterion=criterion, max_depth=max_depth)
     clf.fit(X, y)
 
-    # 生成网格点
     x_min, x_max = X[:, 0].min() - 1, X[:, 0].max() + 1
     y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
     xx, yy = np.meshgrid(

@@ -3,7 +3,6 @@ from sklearn.model_selection import train_test_split
 
 
 def load_dataset(name):
-    """根据名称加载不同数据集"""
     if name == "iris":
         data = load_iris()
     elif name == "wine":
